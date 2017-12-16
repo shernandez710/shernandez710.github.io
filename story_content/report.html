@@ -1,404 +1,379 @@
-<HTML>
-<HEAD>
-<!-- saved from url=(0014)about:internet -->
-<TITLE>Results</TITLE>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- saved from url=(0014)about:internet -->
+  <meta charset="utf-8">
+  <title>Results</title>
+  <style>
 
-<SCRIPT>
-var g_arrMonths = new Array()
+    body {
+      font-family: arial;
+      text-align: center;
+      font-size:10pt;
+    }
 
-// Enter the month names below
-try
-{
-	g_arrMonths[0] = __MONTH_JAN__;	
-	g_arrMonths[1] = __MONTH_FEB__;
-	g_arrMonths[2] = __MONTH_MAR__;
-	g_arrMonths[3] = __MONTH_APR__;
-	g_arrMonths[4] = __MONTH_MAY__;
-	g_arrMonths[5] = __MONTH_JUN__;
-	g_arrMonths[6] = __MONTH_JUL__;
-	g_arrMonths[7] = __MONTH_AUG__;
-	g_arrMonths[8] = __MONTH_SEP__;
-	g_arrMonths[9] = __MONTH_OCT__;
-	g_arrMonths[10] = __MONTH_NOV__;
-	g_arrMonths[11] = __MONTH_DEC__;
+    table {
+      border: 1px outset grey;
+    }
 
-	// Enter the column headers
-	var g_strDateTime 		= __DATE_TIME__;
-	var g_strStudentScore 	= __STUDENT_SCORE__;
-	var g_strPassingScore 	= __PASSING_SCORE__;
-	var g_strResult1 		= __RESULT__;
-	var g_strQuestion 		= __QUESTION__;
-	var g_strCorrectAns 	= __CORRECT_ANS__;
-	var g_strResult2 		= __RESULT__;
-	var g_strStudentAns 	= __STUDENT_ANS__;
-	var g_strPointsAwarded 	= __POINTS_AWARD__;
-	var g_strNeutral 		= __NEUTRAL__;
-	var g_strCorrect 		= __CORRECT__;
-	var g_strIncorrect 		= __INCORRECT__;
-}
-catch(e)
-{
-	g_arrMonths[0] = "January";	
-	g_arrMonths[1] = "February";
-	g_arrMonths[2] = "March";
-	g_arrMonths[3] = "April";
-	g_arrMonths[4] = "May";
-	g_arrMonths[5] = "June";
-	g_arrMonths[6] = "July";
-	g_arrMonths[7] = "August";
-	g_arrMonths[8] = "September";
-	g_arrMonths[9] = "October";
-	g_arrMonths[10] = "November";
-	g_arrMonths[11] = "December";
+    td, th {
+      border: 1px inset grey;
+    }
 
-	// Enter the column headers
-	var g_strDateTime = "Date / Time";
-	var g_strStudentScore = "Student Score";
-	var g_strPassingScore = "Passing Score";
-	var g_strResult1 = "Result";
-	var g_strQuestion = "Question";
-	var g_strCorrectAns = "Correct Answer";
-	var g_strResult2 = "Result";
-	var g_strStudentAns = "Student Answer";
-	var g_strPointsAwarded = "Points Awarded";
-	var g_strNeutral = "Neutral";
-	var g_strCorrect = "Correct";
-	var g_strIncorrect = "Incorrect";
-}
+    table.summary {
+      width: 600px;
+    }
 
-</SCRIPT>
+    table.questions  {
+      width: 100%;
+    }
 
-<STYLE>
+    td {
+      width: 12.5%;
+    }
 
-TABLE.SUMMARY {
-	width: 600px;
-	margin-left: auto;
-	margin-right: auto;
-	border-width: 1px;
-}
-TABLE.QUESTIONS  {
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
-	border-width: 1px;
-}
-TD {
-	font-size:10pt;
-	font-family:arial;
-	text-align: center;
-	width: 12.5%;
-}
-TH {
-	font-size:12pt;
-	font-family:arial;
-}
+    th, h3 {
+      font-size:12pt;
+    }
 
-.CORRECT {
-	font-size:10pt;
-	font-family:arial;
-	color: #008800;
-}
+    h1, h2 {
+      font-size:14pt;
+    }
 
-.INCORRECT {
-	font-size:10pt;
-	font-family:arial;
-	color: #880000;
-}
+    .correct {
+      color: #008800;
+    }
 
-.NEUTRAL {
-	font-size:10pt;
-	font-family:arial;
-	color: #000088;
-}
+    .incorrect {
+      color: #880000;
+    }
 
-.QUESTION {
-	font-size:10pt;
-	font-family:arial;
-	text-align: left;
-	width: 46.25%;	
-}
+    .neutral {
+      color: #000088;
+    }
 
-.NUMBER {
-	font-size:10pt;
-	font-family:arial;
-	text-align: center;
-	width: 3.75%;
-}
+    .question {
+      text-align: left;
+      width: 46.25%;
+    }
 
-.DATE {
-	font-size:10pt;
-	font-family:arial;
-	text-align: center;
-	
-}
+    .number {
+      font-size:10pt;
+      width: 3.75%;
+    }
 
-.DATETIME {
-	font-size:10pt;
-	font-family:arial;
-	margin-top: 0;
-	margin-bottom: 0;
+    .datetime {
+      font-size:10pt;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+  </style>
+<script>
+
+var strings = {}
+try {
+  strings = {
+    months: [
+      __MONTH_JAN__,
+      __MONTH_FEB__,
+      __MONTH_MAR__,
+      __MONTH_APR__,
+      __MONTH_MAY__,
+      __MONTH_JUN__,
+      __MONTH_JUL__,
+      __MONTH_AUG__,
+      __MONTH_SEP__,
+      __MONTH_OCT__,
+      __MONTH_NOV__,
+      __MONTH_DEC__
+    ],
+    dateTime: __DATE_TIME__,
+    studentScore: __STUDENT_SCORE__,
+    passScore: __PASSING_SCORE__,
+    courseResult: __COURSE_RESULT__,
+    question: __QUESTION__,
+    correctAnswer: __CORRECT_ANS__,
+    quizResult: __QUIZ_RESULT__,
+    studentAnswer: __STUDENT_ANS__,
+    pointsAwarded: __POINTS_AWARD__,
+    neutral: __NEUTRAL__,
+    correct: __CORRECT__,
+    incorrect: __INCORRECT__
+  };
+} catch (e) {
+  strings = {
+    months: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December'
+    ],
+    dateTime: 'Date / Time',
+    studentScore: 'Student Score',
+    passingScore: 'Passing Score',
+    courseResult: 'Result',
+
+    question: 'Question',
+    correctAnswer: 'Correct Answer',
+    quizResult: 'Result',
+    studentAnswer: 'Student Answer',
+    pointsAwarded: 'Points Awarded',
+    neutral: 'Neutral',
+    correct: 'Correct',
+    incorrect: 'Incorrect'
+  };
 }
 
-.SUMMARY {
-	font-size:10pt;
-	font-family:arial;
-	text-align: center;
+var parentWnd = window.opener,
+    courseResults = parentWnd.g_oContentResults,
+    quizzes = parentWnd.g_listQuizzes,
+    printOptions = parentWnd.g_oPrintOptions,
+    quizOrder = printOptions.arrQuizzes,
+    mainQuiz = quizzes[printOptions.strMainQuizId];
+
+function displayHeader() {
+  var header = document.getElementById('header'),
+      userName = printOptions.strName
+      config = {
+        elName: 'div',
+        children: [
+          { elName: 'h1', text: mainQuiz.strQuizName},
+          { elName: 'h2', text: userName, enabled: userName != null && userName.length > 0},
+        ]
+      };
+
+  header.appendChild(createElFromDef(config));
 }
 
-H1 {
-	font-size:14pt;
-	font-family:arial;
-	text-align: center;
+function displayCourseSummary() {
+  var survey = printOptions.bSurvey,
+      showUserScore = !survey && printOptions.bShowUserScore,
+      showPassingScore = !survey && printOptions.bShowPassingScore,
+      showPassFail = !survey && printOptions.bShowShowPassFail,
+      studentScore = Number(mainQuiz.nPtScore),
+      passingScore = Number(mainQuiz.nPassingScore),
+      courseResult = (studentScore >= passingScore) ? 'Pass' : 'Fail',
+      currentDateTime = formatDate(courseResults.dtmFinished),
+      courseSummary = document.getElementById('courseSummary'),
+      config = {
+        elName: 'table',
+        attrs: [{ name: 'class', value: 'summary' }, { name: 'align', value: 'center' }],
+        children: [
+          { elName: 'tr',
+            children: [
+              { elName: 'th', text: strings.dateTime},
+              { elName: 'th', text: strings.studentScore, enabled: showUserScore},
+              { elName: 'th', text: strings.passingScore, enabled: showPassingScore},
+              { elName: 'th', text: strings.courseResult, enabled: showPassFail}
+          ]},
+          { elName: 'tr',
+            children: [
+              { elName: 'td',
+                children: [
+                  { elName: 'p', attrs: [{ name: 'class', value:'datetime' }], text: currentDateTime.date },
+                  { elName: 'p', attrs: [{ name: 'class', value:'datetime' }], text: currentDateTime.time }
+              ]},
+              { elName: 'td', text: studentScore, enabled: showUserScore },
+              { elName: 'td', text: passingScore, enabled: showPassingScore },
+              { elName: 'td', text: courseResult, enabled: showPassFail }
+          ]}
+        ]
+      };
+
+  courseSummary.appendChild(createElFromDef(config));
 }
 
-H2 {
-	font-size:14pt;
-	font-family:arial;
-	text-align: center;
-}
+function displayQuizResults() {
+  for (var i = 0; i < quizOrder.length; i++) {
+    var quizId = quizOrder[i];
+    displayQuizResult(quizId);
+  }
+};
 
-H3 {
-	font-size:12pt;
-	font-family:arial;
-	text-align: center;
-}
-
-
-</STYLE>
-
-<SCRIPT>
-var g_oContentResults = window.opener.g_oContentResults;
-var g_listQuizzes = window.opener.g_listQuizzes;
-var g_oPrintOptions = window.opener.g_oPrintOptions;
-
-function WriteQuizResults(strQuizId)
-{
-	var oQuiz = g_listQuizzes[strQuizId];
-	document.write("<h3>" + oQuiz.strQuizName + "</h3>");
-	document.write("<TABLE class='QUESTIONS' BORDER=1>");
-	document.write("<TR>");
-	document.write("<TH>#</TH>");
-	document.write("<TH>" + g_strQuestion + "</TH>");
-	
-	if (!g_oPrintOptions.bSurvey)
-	{
-		document.write("<TH>" + g_strCorrectAns + "</TH>");
-	}
-	
-	document.write("<TH>" + g_strStudentAns + "</TH>");
-	
-	if (!g_oPrintOptions.bSurvey)
-	{
-		document.write("<TH>" + g_strResult2 + "</TH>");
-		document.write("<TH>" + g_strPointsAwarded + "</TH>");
-	}
-	
-	document.write("</TR>");
+function displayQuizResult(quizId) {
+  var i, resultsTable;
+      quiz = quizzes[quizId],
+      questionOrder = getQuestionOrder(quiz),
+      quizDiv = createQuizDiv(quiz),
+      quizReview = document.getElementById('quizReview');
 
 
-	// Sort our questions by question number
-	var arrSort = new Array();
-	
-	var arrQuestions = oQuiz.arrQuestions;
+  quizReview.appendChild(quizDiv);
+  resultsTable = document.getElementById([ 'results-', quizId ].join(''));
 
-	if (arrQuestions.length > 0)
-	{
-		if (arrQuestions[0].bFound)
-		{
-			for (var i = 0; i < arrQuestions.length; i++)
-			{
-				arrQuestions[i].bFound = false;
+  for (i = 0; i < questionOrder.length; i++) {
+    var config = getQuestionConfig(quiz, questionOrder[i]);
+    resultsTable.appendChild(createElFromDef(config));
+  }
+};
+
+function createQuizDiv(quiz) {
+  var survey = printOptions.bSurvey;
+
+  return createElFromDef({
+    elName: 'div',
+    children: [
+      { elName: 'h3', text: quiz.strQuizName },
+      { elName: 'table',
+        attrs: [
+          { name: 'class', value: 'questions' },
+          { name: 'id', value: [ 'results-', quiz.strQuizId ].join('') }
+        ],
+        children: [
+          { elName: 'tr', children: [
+            { elName: 'th', text: '#' },
+            { elName: 'th', text: strings.question },
+            { elName: 'th', text: strings.correctAnswer, enabled: !survey},
+            { elName: 'th', text: strings.studentAnswer },
+            { elName: 'th', text: strings.quizResult, enabled: !survey },
+            { elName: 'th', text: strings.pointsAwarded, enabled: !survey }
+        ]}
+      ]}
+    ]
+  });
+};
+
+function createElFromDef(elDef) {
+  if (elDef.enabled === false) {
+    return null;
+  }
+
+  var el = createAndInitElement(elDef.elName, elDef.attrs, elDef.text);
+
+  if (elDef.children != null) {
+    for (var i = 0; i < elDef.children.length; i++) {
+      currEl = createElFromDef(elDef.children[i]);
+      if (currEl != null) {
+        el.appendChild(currEl);
+      }
+    }
+  }
+
+  return el;
+};
+
+function createAndInitElement(elementName, attrs, text) {
+  var el = document.createElement(elementName);
+
+  if (attrs != null) {
+    for (var i = 0; i < attrs.length; i++) {
+      var attr = attrs[i];
+      el.setAttribute(attr.name, attr.value);
+    }
+  }
+
+  if (text != null) {
+    el.appendChild(document.createTextNode(text));
+  }
+
+  return el;
+};
+
+function getQuestionOrder(quiz) {
+	var i, j,
+      questionOrder = [],
+      questions = quiz.arrQuestions;
+
+	if (questions != null && questions.length > 0)	{
+    // reset
+		if (questions[0].found) {
+			for (var i = 0; i < questions.length; i++) {
+				questions[i].found = false;
 			}
 		}
 
-		for (var i = arrQuestions.length - 1; i >= 0; i--)
-		{
-			var nIndex = -1;
-			var nMaxValue = -1;
+		for (i = questions.length - 1; i >= 0; i--) {
+			var index = -1,
+			    maxQuestionNum = -1,
+          currQuestionNum;
 	
-			for (var j = 0; j < arrQuestions.length; j++)
-			{
-				if (!arrQuestions[j].bFound && Number(arrQuestions[j].nQuestionNumber) > nMaxValue)
-				{
-					nMaxValue = arrQuestions[j].nQuestionNumber;
-					if (nIndex >= 0)
-					{
-						arrQuestions[nIndex].bFound = false;
+			for (j = 0; j < questions.length; j++) {
+        currQuestionNum = Number(questions[j].nQuestionNumber);
+				if (!questions[j].found && currQuestionNum > maxQuestionNum) {
+					maxQuestionNum = currQuestionNum;
+					if (index >= 0) {
+						questions[index].found = false;
 					}
-					arrQuestions[j].bFound = true;
-					nIndex = j;				
+					questions[j].found = true;
+					index = j;
 				}
 			}
-			arrSort[i] = nIndex;
+			questionOrder[i] = index;
 		}
+  }
 
-		for (var i = 0; i < arrSort.length; i++)
-		{
-			AddItem(arrQuestions[arrSort[i]]);
-		}
-	}
-
-	document.write("</TABLE>");
+  return questionOrder;
 }
 
-function AddItem(oQuestion)
-{
-	var strResult = g_strIncorrect;
-	var strClass = "INCORRECT";
-	var strCorrectResponse = "&nbsp;";
-	var strUserResponse = "&nbsp;";
+function getQuestionConfig(quiz, questionIdx) {
+  var questions = quiz.arrQuestions,
+      question = questions[questionIdx],
+      survey = printOptions.bSurvey;
 
-	if (oQuestion.strCorrectResponse)
-	{
-		strCorrectResponse = oQuestion.strCorrectResponse;
-		 
-		strCorrectResponse = strCorrectResponse.replace(/\|#\|/g,", ");
-	}  
- 
-	if (oQuestion.strUserResponse)
-	{
-		strUserResponse = oQuestion.strUserResponse;
-		strUserResponse = strUserResponse.replace(/\|#\|/g,", ");
-	}
+  return {
+    elName: 'tr',
+    children: [
+      { elName: 'td', attrs: [{ name: 'class', value: 'number'}], text: question.nQuestionNumber },
+      { elName: 'td', attrs: [{ name: 'class', value: 'question'}], text: question.strDescription },
+      { elName: 'td', text: formatResponse(question.strCorrectResponse), enabled: !survey},
+      { elName: 'td', text: formatResponse(question.strUserResponse) },
+      { elName: 'td', attrs: [{ name: 'class', value: question.strStatus}], text: strings[question.strStatus], enabled: !survey },
+      { elName: 'td', text: question.nPoints, enabled: !survey }
+    ]
+  };
+};
 
-	document.write("<TR>"); 
-	document.write("<TD class='NUMBER'>" + oQuestion.nQuestionNumber + "</TD>");
-	document.write("<TD class='QUESTION'>" + oQuestion.strDescription + "</TD>");
-	
-	if (!g_oPrintOptions.bSurvey)
-	{
-		document.write("<TD>" + strCorrectResponse + "</TD>");
-	}
-	document.write("<TD>" + strUserResponse + "</TD>");
-	
-	if (!g_oPrintOptions.bSurvey)
-	{
-		if (oQuestion.strStatus == "correct")
-		{
-			strResult = g_strCorrect;
-			strClass = "CORRECT"
-		}
-		else if (oQuestion.strStatus == "neutral")
-		{
-			strResult = g_strNeutral
-			strClass = "NEUTRAL"
-		}
-
-		document.write("<TD class='" + strClass + "'>" + strResult + "</TD>");
-		document.write("<TD>" + oQuestion.nPoints + "</TD>");
-	}
-	document.write("</TR>");
+function formatResponse(response) {
+  return (response != null) ? response.replace(/\|#\|/g, ', ') : '&nbsp';
 }
 
-function FormatDate(dtmDate)
-{
-	var strResult = "";
-	var nHours = dtmDate.getHours();
-	var strAM = "am";
-	var nMinutes = dtmDate.getMinutes();
-	var strMinutes = "" + nMinutes;
+function formatDate(dtm) {
+	var hours = dtm.getHours(),
+      period = hours >= 12 ? 'pm' : 'am',
+      minutes = dtm.getMinutes().toString(),
+      month = strings.months[dtm.getMonth()],
+      date = dtm.getDate(),
+      year = dtm.getFullYear();
 
-	if (nMinutes < 10)
-	{
-		strMinutes = "0" + nMinutes;
+	while (minutes.length < 2) {
+		minutes = '0' + minutes;
 	}
 
-	if (nHours == 12)
-	{
-		strAM = "pm";
-	}
-
-	if (nHours > 12)
-	{
-		nHours -= 12;
-		strAM = "pm";
-	}
+  if (hours > 12) {
+    hours -= 12;
+  }
 	
+  return {
+    date: [ month, ' ', date, ', ', year ].join(''),
+    time: [ hours, ':', minutes, ' ', period ].join('')
+  }
+};
 
-	strResult += "<P class='DATETIME'>"
-	strResult += g_arrMonths[dtmDate.getMonth()] + " ";
-	strResult += dtmDate.getDate() + ", ";
-	strResult += dtmDate.getFullYear() + "  ";
-	strResult += "</P><P class='DATETIME'>"
-	strResult += nHours + ":";
-	strResult += strMinutes + " ";
-	strResult += strAM;
-	strResult += "</P>"
-	return strResult;
+function init() {
+  displayHeader();
+  displayCourseSummary();
+  if (printOptions.bShowQuizReview) {
+    displayQuizResults();
+  }
 }
 
-</SCRIPT>
+</script>
 
-</HEAD>
-<BODY>
-
-<SCRIPT>
-var strTitle = g_listQuizzes[g_oPrintOptions.strMainQuizId].strQuizName;
-document.write("<P><H1>" + strTitle + "</H1></P>");
-if (g_oPrintOptions.strName)
-{
-	if (g_oPrintOptions.strName.length > 0)
-	{
-		document.write("<P><H2>" + g_oPrintOptions.strName + "</H2></P>");
-	}
-}
-
-	document.write("<P style='margin-bottom: 0;'>&nbsp;</P>");
-	document.write("<TABLE class='SUMMARY' border=1 align='center'>");
-	document.write("<TR>");
-	document.write("<TH>" + g_strDateTime + "</TH>");
-
-	if (g_oPrintOptions.bShowUserScore && !g_oPrintOptions.bSurvey)
-	{	
-		document.write("<TH>" + g_strStudentScore + "</TH>");
-	}
-	if (g_oPrintOptions.bShowPassingScore && !g_oPrintOptions.bSurvey)
-	{
-		document.write("<TH>" + g_strPassingScore + "</TH>");
-	}
-	if (g_oPrintOptions.bShowShowPassFail && !g_oPrintOptions.bSurvey)
-	{
-		document.write("<TH>" + g_strResult1 + "</TH>");
-	}
-
-	
-	document.write("</TR><TR>");
-
-	document.write("<TD class='DATE'>" + FormatDate(g_oContentResults.dtmFinished) + "</TD>");
-
-	if (g_oPrintOptions.bShowUserScore && !g_oPrintOptions.bSurvey)
-	{
-		document.write("<TD class='SUMMARY'>" + g_listQuizzes[g_oPrintOptions.strMainQuizId].nPtScore + "</TD>");
-	}
-	if (g_oPrintOptions.bShowPassingScore && !g_oPrintOptions.bSurvey)
-	{
-		document.write("<TD class='SUMMARY'>" + g_listQuizzes[g_oPrintOptions.strMainQuizId].nPassingScore + "</TD>");
-	}
-	if (g_oPrintOptions.bShowShowPassFail && !g_oPrintOptions.bSurvey)
-	{
-		var nPtScore = Number(g_listQuizzes[g_oPrintOptions.strMainQuizId].nPtScore);
-		var nPassScore = Number(g_listQuizzes[g_oPrintOptions.strMainQuizId].nPassingScore);
-		
-		var strCapResult = (nPtScore >= nPassScore) ? "Pass" : "Fail";
-		document.write("<TD class='SUMMARY'>" + strCapResult + "</TD>");
-	}
-	document.write("</TR></TABLE>");
-</SCRIPT>
-
-<P style='margin-top: 0;'>&nbsp;</P>
-
-<SCRIPT>
-	if (g_oPrintOptions.bShowQuizReview)
-	{
-		var arrQuizzes  = g_oPrintOptions.arrQuizzes;
-		// for (strQuizId in g_listQuizzes)
-		for (var i = 0; i < arrQuizzes.length; i++)
-		{
-			WriteQuizResults(arrQuizzes[i]);
-		}
-	}
-
-</SCRIPT>
-
-</BODY>
-</HTML>
+</head>
+<body onload="init()">
+  <div id="header"></div>
+  <p>&nbsp;</p>
+  <div id="courseSummary"></div>
+  <p>&nbsp;</p>
+  <div id="quizReview"></div>
+</body>
+</html>
